@@ -1,0 +1,53 @@
+version: '3.3'
+
+services:
+    car:
+        build: 
+          context: ./osrm
+          args:
+            - PROFILE=/opt/car.lua
+        image: vdmtl/osrm-backend-car
+        container_name: osrm-backend-car
+        ports:
+          - "5001:5000"
+
+    foot:
+        build: 
+          context: ./osrm
+          args:
+            - PROFILE=/opt/foot.lua
+        image: vdmtl/osrm-backend-foot
+        container_name: osrm-backend-foot
+        ports:
+          - "5002:5000"
+
+    bicycle:
+        build: 
+          context: ./osrm
+          args:
+            - PROFILE=/opt/bicycle.lua
+        image: vdmtl/osrm-backend-bicycle
+        container_name: osrm-backend-bicycle
+        ports:
+          - "5003:5000"
+
+    # bicycle:
+    #     environment:
+    #       - PROFILE=/opt/bicycle.lua
+    #     build: ./osrm
+    #     image: vdmtl/osrm-bicycle-api
+    #     container_name: osrm-bicycle-api
+    #     ports:
+    #         - "5003:5000"
+
+    # nginx-proxy:
+    #     build: ./nginx
+    #     image: vdmtl/nginx-proxy
+    #     container_name: nginx-server
+    #     ports:
+    #       - "80:80"
+    #       - "443:443"
+    #     links:
+    #       - car
+    #       - foot
+    #       - bicycle
